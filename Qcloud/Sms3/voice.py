@@ -2,7 +2,7 @@
 # encoding:utf-8
 
 import hashlib
-from tools import SmsSenderUtil
+from Qcloud.Sms3.tools import SmsSenderUtil
 
 '''语音验证码发送'''
 class VoiceSender:
@@ -50,8 +50,8 @@ class VoiceSender:
         data["tel"] = tel
         data["msg"] = msg
         data["playtimes"] = playtimes
-        data["sig"] = hashlib.sha256("appkey=" + self.appkey + "&random=" + str(rnd)
-                                     + "&time=" + str(cur_time) + "&mobile=" + phone_number).hexdigest()
+        sig_str="appkey=" + self.appkey + "&random=" + str(rnd) + "&time=" + str(cur_time) + "&mobile=" + phone_number
+        data["sig"] = hashlib.sha256(sig_str.encode("utf-8")).hexdigest()
         data["time"] = cur_time
         data["ext"] = ext
 
@@ -106,8 +106,8 @@ class VoicePromptSender:
         data["prompttype"] = 2
         data["promptfile"] = msg
         data["playtimes"] = playtimes
-        data["sig"] = hashlib.sha256("appkey=" + self.appkey + "&random=" + str(rnd)
-                                     + "&time=" + str(cur_time) + "&mobile=" + phone_number).hexdigest()
+        sig_str="appkey=" + self.appkey + "&random=" + str(rnd) + "&time=" + str(cur_time) + "&mobile=" + phone_number
+        data["sig"] = hashlib.sha256(sig_str.encode("utf-8")).hexdigest()
         data["time"] = cur_time
         data["ext"] = ext
 

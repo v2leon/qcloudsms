@@ -3,12 +3,12 @@
 # python 2.7 测试通过
 # python 3 更换适当的开发库就能使用，在此我们不额外提供
 
-import httplib
+import http.client as httplib
 import json
 import hashlib
 import random
 import time
-from  tools import SmsSenderUtil
+from Qcloud.Sms3.tools import SmsSenderUtil
 
 class SmsSingleSender:
     """ 单发类定义"""
@@ -66,8 +66,8 @@ class SmsSingleSender:
         data["tel"] = tel
         data["type"] = sms_type
         data["msg"] = msg
-        data["sig"] = hashlib.sha256("appkey=" + self.appkey + "&random=" + str(rnd)
-                                     + "&time=" + str(cur_time) + "&mobile=" + phone_number).hexdigest()
+        sig_str="appkey=" + self.appkey + "&random=" + str(rnd)+ "&time=" + str(cur_time) + "&mobile=" + phone_number
+        data["sig"] = hashlib.sha256(sig_str.encode("utf-8")).hexdigest()
         data["time"] = cur_time
         data["extend"] = extend
         data["ext"] = ext
